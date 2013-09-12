@@ -1,0 +1,24 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "node": true,
+  "quotmark": "single",
+  "-W065": true,
+  "globals": {
+    "InflectionJS": true,
+    "window": true,
+    "$": true,
+    "twttr": true,
+    "key": true,
+    "unescape": true
+  }
+}
