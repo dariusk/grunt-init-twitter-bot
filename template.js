@@ -29,7 +29,36 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  init.process({type: 'node'}, [
+  // Helper to create a "yes/no" question.
+  function yn(o) {
+    o = grunt.util._.defaults({}, o, {
+      default: true,
+      warning: 'You must answer [y]es or [n]o.',
+    });
+    var defaultYes = o.default === true || String(o.default).toLowerCase() === 'y' || String(o.default)[0] === 'Y';
+    o.default = defaultYes ? 'Y/n' : 'y/N';
+    o.sanitize = function(value, data, done) {
+      data[o.name] = defaultYes ? /y/i.test(value) : !/n/i.test(value);
+      done();
+    };
+    return o;
+  }
+ 
+  // Helper to process an array of "yes/no" questions.
+  function yns(o) {
+    return o.map(yn);
+  }
+  
+  // Helper to add a dependency if it doesn't already exist
+  function addDep(props, packageName, version) {
+    if (props.dependencies[packageName]) {
+      return;
+    }
+    props.dependencies[packageName] = version;
+    props.requireCode +=  'var ' + packageName + ' = require(\'' + packageName + '\');\n';
+  }
+
+  init.process({type: 'node'}, yns(require('./questions.json')).concat([
     // Prompt for these values.
     init.prompt('name'),
     {
@@ -78,15 +107,31 @@ exports.template = function(grunt, init, done) {
       default: '',
       warning: 'you can\'t tweet without this'
     },
-  ], function(err, props) {
+  ]), function(err, props) {
     props.keywords = [];
+    props.requireCode = '';
     props.dependencies = {
-      'request': '~2.27.0',
       'underscore': '~1.5.1',
+      'underscore.deferred': '~0.4.0',
       'inflection': '~1.2.6',
-      'cheerio': '~0.12.2',
       'twit': '~1.1.9',
-      'underscore.deferred': '~0.4.0'
+      'wordfilter': '0.1.3'
+    };
+    if (props.cheerio) {
+      addDep(props, 'request', '~2.27.0');
+      addDep(props, 'cheerio', '~0.12.2');
+      props.cheerioCode = '  var url = \'someUrl\';\n' +
+                          '  request(url, function (error, response, body) {\n' +
+                          '    if (!error && response.statusCode == 200) {\n' +
+                          '      var result = \'\';\n' +
+                          '      var $ = cheerio.load(body);\n' +
+                          '      // parse stuff and resolve\n' +
+                          '      dfd.resolve(result);\n' +
+                          '    }\n' + 
+                          '    else {\n' +
+                          '      dfd.reject();\n' +
+                          '    }\n' +
+                          '  });\n';
     }
     props.devDependencies = {
       'grunt-contrib-jshint': '~0.6.0',

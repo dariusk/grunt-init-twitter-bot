@@ -1,10 +1,9 @@
-var request = require('request');
-var cheerio = require('cheerio');
-var _ = require('underscore');
+{%= requireCode %}var _ = require('underscore');
 _.mixin( require('underscore.deferred') );
 var inflection = require('inflection');
 var Twit = require('twit');
 var T = new Twit(require('./config.js'));
+var wordfilter = require('wordfilter');
 
 Array.prototype.pick = function() {
   return this[Math.floor(Math.random()*this.length)];
@@ -17,33 +16,22 @@ Array.prototype.pickRemove = function() {
 
 function generate() {
   var dfd = new _.Deferred();
-/*
-  var url = 'someUrl';
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var result = '';
-      var $ = cheerio.load(body);
-      // parse stuff and resolve
-      dfd.resolve(result);
-    }
-    else {
-      dfd.reject();
-    }
-  });
-*/
+{%= cheerioCode %}
   return dfd.promise();
 }
 
 function tweet() {
   generate().then(function(myTweet) {
-    T.post('statuses/update', { status: myTweet }, function(err, reply) {
-      if (err) {
-        console.log('error:', err);
-      }
-      else {
-        console.log('reply:', reply);
-      }
-    });
+    if (!wordfilter.blacklisted(myTweet)) {
+      T.post('statuses/update', { status: myTweet }, function(err, reply) {
+        if (err) {
+          console.log('error:', err);
+        }
+        else {
+          console.log('reply:', reply);
+        }
+      });
+    }
   });
 }
 

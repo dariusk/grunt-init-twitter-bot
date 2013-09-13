@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cheerio",
+    "message": "Are you going to do any screen scraping?",
+    "default": false
+  }
+]
