@@ -17,12 +17,15 @@ Array.prototype.pickRemove = function() {
 function generate() {
   var dfd = new _.Deferred();
 {%= cheerioCode %}
+  dfd.resolve('hi');
   return dfd.promise();
 }
 
 function tweet() {
   generate().then(function(myTweet) {
     if (!wordfilter.blacklisted(myTweet)) {
+      console.log(myTweet);
+      /*
       T.post('statuses/update', { status: myTweet }, function(err, reply) {
         if (err) {
           console.log('error:', err);
@@ -31,6 +34,7 @@ function tweet() {
           console.log('reply:', reply);
         }
       });
+      */
     }
   });
 }
