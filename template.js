@@ -12,8 +12,7 @@
 exports.description = 'Create a Twitter bot!';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = '_Project name_ shouldn\'t contain "node" or "js" and should ' +
-  'be a unique ID not already in use at search.npmjs.org.';
+exports.notes = 'Pick a _cool name_, no pressure.';
 
 // Template-specific notes to be displayed after question prompts.
 exports.after = 'You should now install project dependencies with _npm ' +
