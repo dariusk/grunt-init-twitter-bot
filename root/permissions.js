@@ -1,3 +1,3 @@
-var key = {
-      API_KEY: '{%= wordnik_apikey %}'
+module.exports = {
+      key: '{%= wordnik_apikey %}'
 };

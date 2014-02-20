@@ -80,7 +80,7 @@ exports.template = function(grunt, init, done) {
       name: 'wordnik_apikey',
       message: 'Enter your Wordnik API key',
       default: '',
-      warning: 'seriously, enter this if you plan to use Wordnik at all'
+      warning: 'if you enter a key, we\'ll add it as a global included from an external file, permissions.js'
     },
     {
       name: 'twitter_consumer_key',
@@ -132,7 +132,10 @@ exports.template = function(grunt, init, done) {
                           '      dfd.reject();\n' +
                           '    }\n' +
                           '  });\n' +
-                          '  /*\n';
+                          '  */\n';
+    }
+    if (props.wordnik_apikey !== '') {
+      props.wordnikKey = 'var wordnikKey = require(\'./permissions.js\').key;\n';
     }
     props.devDependencies = {
       'grunt-contrib-jshint': '~0.6.0',
