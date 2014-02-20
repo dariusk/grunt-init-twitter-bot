@@ -119,7 +119,8 @@ exports.template = function(grunt, init, done) {
     if (props.cheerio) {
       addDep(props, 'request', '~2.27.0');
       addDep(props, 'cheerio', '~0.12.2');
-      props.cheerioCode = '  var url = \'someUrl\';\n' +
+      props.cheerioCode = '  /*\n' +
+                          '  var url = \'someUrl\';\n' +
                           '  request(url, function (error, response, body) {\n' +
                           '    if (!error && response.statusCode == 200) {\n' +
                           '      var result = \'\';\n' +
@@ -130,7 +131,8 @@ exports.template = function(grunt, init, done) {
                           '    else {\n' +
                           '      dfd.reject();\n' +
                           '    }\n' +
-                          '  });\n';
+                          '  });\n' +
+                          '  /*\n';
     }
     props.devDependencies = {
       'grunt-contrib-jshint': '~0.6.0',
