@@ -25,11 +25,18 @@ module.exports = function(grunt) {
         tasks: ['jshint:app']
       }
     },
+    notify_hooks: {
+      options: {
+        enabled: true,
+        max_jshint_notifications: 5
+      }
+    }
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-notify');
 
   // Default task.
   grunt.registerTask('default', ['jshint']);

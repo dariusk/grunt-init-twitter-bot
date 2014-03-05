@@ -140,6 +140,7 @@ exports.template = function(grunt, init, done) {
     props.devDependencies = {
       'grunt-contrib-jshint': '~0.6.0',
       'grunt-contrib-watch': '~0.4.0',
+      'grunt-notify': '~0.2.18'
     };
 
     // Files to copy (and process).
