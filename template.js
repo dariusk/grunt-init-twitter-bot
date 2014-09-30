@@ -12,7 +12,7 @@
 exports.description = 'Create a Twitter bot!';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = 'Pick a _cool name_, no pressure.';
+exports.notes = 'Answer these questions.';
 
 // Template-specific notes to be displayed after question prompts.
 exports.after = 'You should now install project dependencies with _npm ' +
@@ -105,7 +105,7 @@ exports.template = function(grunt, init, done) {
       message: 'Enter your Twitter access token secret',
       default: '',
       warning: 'you can\'t tweet without this'
-    },
+    }
   ]), function(err, props) {
     props.keywords = [];
     props.requireCode = '';
@@ -117,7 +117,7 @@ exports.template = function(grunt, init, done) {
       'wordfilter': '0.1.3'
     };
     if (props.cheerio) {
-      addDep(props, 'request', '~2.27.0');
+      addDep(props, 'request', '~2.44.0');
       addDep(props, 'cheerio', '~0.12.2');
       props.cheerioCode = '  /*\n' +
                           '  var url = \'someUrl\';\n' +
@@ -133,6 +133,9 @@ exports.template = function(grunt, init, done) {
                           '    }\n' +
                           '  });\n' +
                           '  */\n';
+    }
+    if (props.request && !props.cheerio) {
+      addDep(props, 'request', '~2.44.0');
     }
     if (props.wordnik_apikey !== '') {
       props.wordnikKey = 'var wordnikKey = require(\'./permissions.js\').key;\n';
