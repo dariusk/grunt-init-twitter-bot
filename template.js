@@ -113,8 +113,9 @@ exports.template = function(grunt, init, done) {
       'underscore': '~1.5.1',
       'underscore.deferred': '~0.4.0',
       'inflection': '~1.2.6',
-      'twit': '~1.1.9',
-      'wordfilter': '0.1.3'
+      'twit': '~1.1.19',
+      'wordfilter': '*',
+      'ent': '2.2.0'
     };
     if (props.cheerio) {
       addDep(props, 'request', '~2.44.0');
