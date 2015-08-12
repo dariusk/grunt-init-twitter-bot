@@ -112,7 +112,7 @@ exports.template = function(grunt, init, done) {
     props.dependencies = {
       'underscore': '~1.5.1',
       'underscore.deferred': '~0.4.0',
-      'inflection': '~1.2.6',
+      'rita': '~1.0.951',
       'twit': '~1.1.19',
       'wordfilter': '*',
       'ent': '2.2.0'
