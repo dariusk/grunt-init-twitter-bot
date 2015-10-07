@@ -119,20 +119,22 @@ exports.template = function(grunt, init, done) {
     if (props.cheerio) {
       addDep(props, 'request', '~2.44.0');
       addDep(props, 'cheerio', '~0.12.2');
-      props.cheerioCode = '    /*\n' +
-                          '    var url = \'someUrl\';\n' +
-                          '    request(url, (error, response, body) => {\n' +
-                          '      if (!error && response.statusCode == 200) {\n' +
-                          '        var result = \'\';\n' +
-                          '        var $ = cheerio.load(body);\n' +
-                          '        // parse stuff and resolve\n' +
-                          '        resolve(result);\n' +
-                          '      }\n' + 
-                          '      else {\n' +
-                          '        reject();\n' +
-                          '      }\n' +
-                          '    });\n' +
-                          '    */';
+      props.cheerioCode = `
+      /*
+      var url = \'someUrl\';
+      request(url, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+          var result = \'\';
+          var $ = cheerio.load(body);
+          // parse stuff and resolve
+          resolve(result);
+        }
+        else {
+          reject();
+        }
+      });
+      */
+      `;
     }
     if (props.request && !props.cheerio) {
       addDep(props, 'request', '~2.44.0');
