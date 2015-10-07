@@ -1,33 +1,32 @@
 {%= requireCode %}var _ = require('underscore');
-_.mixin( require('underscore.deferred') );
 var Twit = require('twit');
 var T = new Twit(require('./config.js'));
 var wordfilter = require('wordfilter');
 var ent = require('ent');
 {%= wordnikKey %}
 
-Array.prototype.pick = function() {
+Array.prototype.pick = () => {
   return this[Math.floor(Math.random()*this.length)];
 };
 
-Array.prototype.pickRemove = function() {
+Array.prototype.pickRemove = () => {
   var index = Math.floor(Math.random()*this.length);
   return this.splice(index,1)[0];
 };
 
 function generate() {
-  var dfd = new _.Deferred();
+  return new Promise((resolve, reject) => {
+    resolve('hi');
 {%= cheerioCode %}
-  dfd.resolve('hi');
-  return dfd.promise();
+  });
 }
 
 function tweet() {
-  generate().then(function(myTweet) {
+  generate().then(myTweet => {
     if (!wordfilter.blacklisted(myTweet)) {
       console.log(myTweet);
       /*
-      T.post('statuses/update', { status: myTweet }, function(err, reply) {
+      T.post('statuses/update', { status: myTweet }, (err, reply) => {
         if (err) {
           console.log('error:', err);
         }
@@ -41,34 +40,29 @@ function tweet() {
 }
 
 function search(term) {
-  console.log('searching',term);
-  var dfd = new _.Deferred();
-  T.get('search/tweets', { q: term, count: 100 }, function(err, reply) {
-    console.log('search error:',err);
-    var tweets = reply.statuses;
-    tweets = _.chain(tweets)
-      // decode weird characters
-      .map(function(el) {
-        if (el.retweeted_status) {
-          return ent.decode(el.retweeted_status.text);
-        }
-        else {
-          return ent.decode(el.text);
-        }
-      })
-      .reject(function(el) {
-        // throw out quotes and links and replies
-        return el.indexOf('http') > -1 || el.indexOf('@') > -1 || el.indexOf('"') > -1;
-      })
-      .uniq()
-      .value();
-    dfd.resolve(tweets);
+  return new Promise((resolve, reject) => {
+    console.log(`searching ${term}`);
+    T.get('search/tweets', { q: term, count: 100 }, (err, reply) => {
+      if (err) {
+        throw new Error(`Search error: ${err}`);
+      }
+      else {
+        var tweets = reply.statuses;
+        tweets = _.chain(tweets)
+          // decode weird characters
+          .map(el => el.retweeted_status ? ent.decode(el.retweeted_status.text) : ent.decode(el.text))
+          // throw out quotes and links and replies
+          .reject(el => el.indexOf('http') > -1 || el.indexOf('@') > -1 || el.indexOf('"') > -1)
+          .uniq()
+          .value();
+        resolve(tweets);
+      }
+    });
   });
-  return dfd.promise();
 }
 
 // Tweet every 60 minutes
-setInterval(function () {
+setInterval(() => {
   try {
     tweet();
   }

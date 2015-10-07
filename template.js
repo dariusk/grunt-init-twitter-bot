@@ -75,7 +75,7 @@ exports.template = function(grunt, init, done) {
     init.prompt('author_name'),
     init.prompt('author_email'),
     init.prompt('author_url'),
-    init.prompt('node_version', '>= 0.10.0'),
+    init.prompt('node_version', '>= 4.1.0'),
     {
       name: 'wordnik_apikey',
       message: 'Enter your Wordnik API key',
@@ -111,7 +111,6 @@ exports.template = function(grunt, init, done) {
     props.requireCode = '';
     props.dependencies = {
       'underscore': '~1.5.1',
-      'underscore.deferred': '~0.4.0',
       'rita': '~1.0.951',
       'twit': '~1.1.19',
       'wordfilter': '*',
@@ -120,20 +119,20 @@ exports.template = function(grunt, init, done) {
     if (props.cheerio) {
       addDep(props, 'request', '~2.44.0');
       addDep(props, 'cheerio', '~0.12.2');
-      props.cheerioCode = '  /*\n' +
-                          '  var url = \'someUrl\';\n' +
-                          '  request(url, function (error, response, body) {\n' +
-                          '    if (!error && response.statusCode == 200) {\n' +
-                          '      var result = \'\';\n' +
-                          '      var $ = cheerio.load(body);\n' +
-                          '      // parse stuff and resolve\n' +
-                          '      dfd.resolve(result);\n' +
-                          '    }\n' + 
-                          '    else {\n' +
-                          '      dfd.reject();\n' +
-                          '    }\n' +
-                          '  });\n' +
-                          '  */\n';
+      props.cheerioCode = '    /*\n' +
+                          '    var url = \'someUrl\';\n' +
+                          '    request(url, (error, response, body) => {\n' +
+                          '      if (!error && response.statusCode == 200) {\n' +
+                          '        var result = \'\';\n' +
+                          '        var $ = cheerio.load(body);\n' +
+                          '        // parse stuff and resolve\n' +
+                          '        resolve(result);\n' +
+                          '      }\n' + 
+                          '      else {\n' +
+                          '        reject();\n' +
+                          '      }\n' +
+                          '    });\n' +
+                          '    */';
     }
     if (props.request && !props.cheerio) {
       addDep(props, 'request', '~2.44.0');
