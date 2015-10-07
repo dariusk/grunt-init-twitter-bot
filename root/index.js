@@ -5,11 +5,11 @@ var wordfilter = require('wordfilter');
 var ent = require('ent');
 {%= wordnikKey %}
 
-Array.prototype.pick = () => {
+Array.prototype.pick = function() {
   return this[Math.floor(Math.random()*this.length)];
 };
 
-Array.prototype.pickRemove = () => {
+Array.prototype.pickRemove = function() {
   var index = Math.floor(Math.random()*this.length);
   return this.splice(index,1)[0];
 };
