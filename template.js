@@ -75,7 +75,7 @@ exports.template = function(grunt, init, done) {
     init.prompt('author_name'),
     init.prompt('author_email'),
     init.prompt('author_url'),
-    init.prompt('node_version', '>= 4.1.0'),
+    init.prompt('node_version', '>= 4.1.2'),
     {
       name: 'wordnik_apikey',
       message: 'Enter your Wordnik API key',
