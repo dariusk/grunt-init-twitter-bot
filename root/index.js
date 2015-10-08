@@ -36,7 +36,7 @@ function tweet() {
       });
       */
     }
-  });
+  }).catch((e) => console.log(e));
 }
 
 function search(term) {
