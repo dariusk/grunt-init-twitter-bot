@@ -3,8 +3,10 @@ var Twit = require('twit');
 var T = new Twit(require('./config.js'));
 var wordfilter = require('wordfilter');
 var ent = require('ent');
+var rita = require('rita');
+var lexicon = new rita.RiLexicon();
+var r = rita.RiTa;
 {%= wordnikKey %}
-
 Array.prototype.pick = function() {
   return this[Math.floor(Math.random()*this.length)];
 };
@@ -18,7 +20,7 @@ function generate() {
   return new Promise((resolve, reject) => {
     resolve('hi');
 {%= cheerioCode %}
-  });
+  }).catch((e) => console.log(e));
 }
 
 function tweet() {
