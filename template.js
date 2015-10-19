@@ -143,7 +143,7 @@ exports.template = function(grunt, init, done) {
       props.wordnikKey = 'var wordnikKey = require(\'./permissions.js\').key;\n';
     }
     props.devDependencies = {
-      'grunt-contrib-jshint': '~0.6.0',
+      'grunt-contrib-jshint': '~0.11.0',
       'grunt-contrib-watch': '~0.4.0',
       'grunt-notify': '~0.2.18'
     };

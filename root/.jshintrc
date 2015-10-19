@@ -13,6 +13,7 @@
   "node": true,
   "quotmark": "single",
   "-W065": true,
+  "esnext": true,
   "globals": {
     "InflectionJS": true,
     "window": true,
