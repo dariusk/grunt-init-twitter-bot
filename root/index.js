@@ -18,7 +18,9 @@ Array.prototype.pickRemove = function() {
 
 function generate() {
   return new Promise((resolve, reject) => {
-    resolve('hi');
+    var noun = lexicon.randomWord('nn', 3);
+    var stresses = r.getStresses(noun);
+    resolve(`Hi, the noun "${noun}" has a ${stresses} meter`);
 {%= cheerioCode %}
   }).catch((e) => console.log(e));
 }
