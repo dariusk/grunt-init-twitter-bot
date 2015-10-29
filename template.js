@@ -110,8 +110,8 @@ exports.template = function(grunt, init, done) {
     props.keywords = [];
     props.requireCode = '';
     props.dependencies = {
-      'underscore': '~1.5.1',
-      'rita': '~1.0.951',
+      'underscore': '~1.8.0',
+      'rita': '~1.1.0',
       'twit': '~1.1.19',
       'wordfilter': '*',
       'ent': '2.2.0'
@@ -145,7 +145,7 @@ exports.template = function(grunt, init, done) {
     props.devDependencies = {
       'grunt-contrib-jshint': '~0.11.0',
       'grunt-contrib-watch': '~0.6.0',
-      'grunt-notify': '~0.2.18'
+      'grunt-notify': '~0.4.0'
     };
 
     // Files to copy (and process).
